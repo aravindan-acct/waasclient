@@ -13,4 +13,8 @@ An implementation of the package is included in the waas_api_test directory.
     2. `export WAAS_PASSWD=<waas account password>`
 
 - Navigate to the directory and run `go run .`
+    
+    `cd waas_api_test`
+
+    `go run .`
 
