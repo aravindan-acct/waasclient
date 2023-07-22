@@ -39,3 +39,38 @@ func Token(username string, password string, CudaClient *http.Client) string {
 	api_token := token_map["key"].(string)
 	return api_token
 }
+
+func WAFToken(username string, password string, WAF_IP string, Cuda_WAF_Client *http.Client) string {
+	var waf_login_url string
+	waf_login_url = WAF_IP + "/restapi/v3.1/login"
+	Cuda_WAF_Client = WaasClient()
+	var login_data map[string]string
+	login_data = make(map[string]string)
+	login_data["username"] = username
+	login_data["password"] = password
+
+	json_login_data, err := json.Marshal(login_data)
+	log.Println("JSON Payload:")
+	log.Println(string(json_login_data))
+	if err != nil {
+		log.Println(err)
+	}
+	login_payload := bytes.NewBuffer(json_login_data)
+	login_req, err := http.NewRequest("POST", waf_login_url, io.Reader(login_payload))
+	if err != nil {
+		log.Println(err)
+	}
+	login_req.Header.Set("Content-Type", "application/json")
+
+	res, err := Cuda_WAF_Client.Do(login_req)
+	if err != nil {
+		log.Println(err)
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(string(body))
+	return string(body)
+}
