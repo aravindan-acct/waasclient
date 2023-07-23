@@ -72,5 +72,10 @@ func WAFToken(username string, password string, WAF_IP string, Cuda_WAF_Client *
 		log.Println(err)
 	}
 	log.Println(string(body))
-	return string(body)
+	var token_map map[string]interface{}
+	json.Unmarshal([]byte(body), &token_map)
+	var token string
+	token = token_map["token"].(string)
+	log.Println(token + ":")
+	return token + ":"
 }
