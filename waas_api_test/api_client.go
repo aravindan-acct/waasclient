@@ -8,7 +8,7 @@ import (
 	waasclient "waasclient/waas_client"
 )
 
-// Take environment variables as input for credentials and makes an API call to WAAS.
+// Takes environment variables as input for credentials and makes an API call to WAAS.
 func waas_api() {
 	email := os.Getenv("WAAS_EMAIL")
 	password := os.Getenv("WAAS_PASSWD")
@@ -39,6 +39,7 @@ func waas_api() {
 	log.Println(res.StatusCode)
 }
 
+// Takes environment variables as input for credentials and makes an API call to WAF.
 func waf_api() {
 	username := os.Getenv("WAF_USERNAME")
 	password := os.Getenv("WAF_PASSWD")
