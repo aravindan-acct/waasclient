@@ -46,6 +46,18 @@ func waf_api() {
 	WAF_Client := waasclient.WaasClient()
 	waf_token := waasclient.WAFToken(username, password, waf_info, WAF_Client)
 	log.Println(waf_token)
+	req, err := http.NewRequest("GET", waf_info+"/restapi/v3.1/system", nil)
+	if err != nil {
+		log.Println(err)
+	}
+	req.SetBasicAuth(waf_token, "")
+	res, err := WAF_Client.Do(req)
+	if err != nil {
+		log.Println(err)
+	}
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+	log.Println(string(body))
 }
 
 func main() {
