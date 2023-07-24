@@ -8,6 +8,8 @@ import (
 	waasclient "waasclient/waas_client"
 )
 
+//Demo script to consume the api tokens from WAAS or WAF
+
 // Takes environment variables as input for credentials and makes an API call to WAAS.
 func waas_api() {
 	email := os.Getenv("WAAS_EMAIL")
