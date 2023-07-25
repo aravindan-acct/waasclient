@@ -28,10 +28,7 @@ func Token(username string, password string, CudaClient *http.Client) string {
 		log.Println(err)
 	}
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Println(err)
-	}
+	body, _ := ioutil.ReadAll(res.Body)
 	log.Println(string(body))
 	var token_map map[string]interface{}
 	json.Unmarshal(body, &token_map)
@@ -52,9 +49,6 @@ func WAFToken(username string, password string, WAF_IP string, Cuda_WAF_Client *
 	json_login_data, err := json.Marshal(login_data)
 	log.Println("JSON Payload:")
 	log.Println(string(json_login_data))
-	if err != nil {
-		log.Println(err)
-	}
 	login_payload := bytes.NewBuffer(json_login_data)
 	login_req, err := http.NewRequest("POST", waf_login_url, io.Reader(login_payload))
 	if err != nil {
@@ -67,10 +61,7 @@ func WAFToken(username string, password string, WAF_IP string, Cuda_WAF_Client *
 		log.Println(err)
 	}
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		log.Println(err)
-	}
+	body, _ := ioutil.ReadAll(res.Body)
 	log.Println(string(body))
 	var token_map map[string]interface{}
 	json.Unmarshal([]byte(body), &token_map)
